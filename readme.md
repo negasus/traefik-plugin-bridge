@@ -2,6 +2,8 @@
 
 > Work In Progress
 
+> `BINARY` mode still not implemented
+
 The Bridge plugin allows make requests to your custom services. 
 
 You can:
@@ -60,3 +62,9 @@ type ResponseInterruptRequest struct {
 }
 ```
 
+## Probable Roadmap
+
+- implementation for the `BINARY` mode
+- full documentation 
+- check the response status from the customer service
+- circuit breaker
