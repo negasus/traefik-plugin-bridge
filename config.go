@@ -6,7 +6,7 @@ import (
 
 const (
 	defaultProtocol     = ProtocolHTTP
-	defaultAddress      = "localhost:8000"
+	defaultAddress      = "http://127.0.0.1:8000"
 	defaultTimeout      = 500
 	defaultFailStrategy = FailStrategyPass
 )

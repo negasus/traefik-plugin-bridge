@@ -18,6 +18,20 @@ You can:
     - add response headers
     - interrupt the request with custom body and status code 
 
+## Configuration
+
+```
+protocol: 'HTTP' or 'BINARY'. Default 'HTTP'
+address: Address of your service. Default 'http://127.0.0.1:8000'
+timeout: Request timeout to your service, ms. Default '500'
+fail_strategy: Strategy on fail request to your service. Default 'PASS'
+request:
+    - headers: bool. Send request headers to your service. Default 'true'
+    - remote_address: bool. Send remote address to your service. Default 'true'
+    - method: bool. Send http method to your service. Default 'true'
+    - uri: bool. Send URI method to your service. Default 'true'
+```
+
 ## Request
 
 ```
