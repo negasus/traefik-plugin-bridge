@@ -1,0 +1,10 @@
+displayName: Bridge
+type: middleware
+
+import: github.com/negasus/traefik-plugin-bridge
+
+summary: '[bridge] Call third party services on every request'
+
+testData:
+  protocol: tcp
+  address: 127.0.0.1:3000
