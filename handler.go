@@ -7,7 +7,7 @@ import (
 func (bridge *Bridge) ServeHTTP(rw http.ResponseWriter, httpReq *http.Request) {
 	req := AcquireRequest()
 	defer ReleaseRequest(req)
-	req.FillFromHTTPRequest(httpReq)
+	req.FillFromHTTPRequest(httpReq, &bridge.requestConfig)
 
 	var resp *Response
 	var err error

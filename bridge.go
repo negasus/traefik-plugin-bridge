@@ -17,11 +17,12 @@ const (
 
 // Bridge plugin.
 type Bridge struct {
-	mode         bridgeMode
-	clientHTTP   *ClientHTTP
-	clientBINARY *ClientBINARY
-	next         http.Handler
-	name         string
+	mode          bridgeMode
+	clientHTTP    *ClientHTTP
+	clientBINARY  *ClientBINARY
+	next          http.Handler
+	name          string
+	requestConfig ConfigRequest
 }
 
 // New created a new Bridge plugin.
@@ -31,8 +32,9 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 	}
 
 	b := &Bridge{
-		next: next,
-		name: name,
+		next:          next,
+		name:          name,
+		requestConfig: config.Request,
 	}
 
 	var err error

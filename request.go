@@ -43,11 +43,19 @@ func (r *Request) reset() {
 	r.RequestURI = ""
 }
 
-func (r *Request) FillFromHTTPRequest(httpReq *http.Request) {
-	r.Headers = httpReq.Header
-	r.RemoteAddr = httpReq.RemoteAddr
-	r.Method = httpReq.Method
-	r.RequestURI = httpReq.RequestURI
+func (r *Request) FillFromHTTPRequest(httpReq *http.Request, requestConfig *ConfigRequest) {
+	if requestConfig.Headers {
+		r.Headers = httpReq.Header
+	}
+	if requestConfig.RemoteAddress {
+		r.RemoteAddr = httpReq.RemoteAddr
+	}
+	if requestConfig.Method {
+		r.Method = httpReq.Method
+	}
+	if requestConfig.URI {
+		r.RequestURI = httpReq.RequestURI
+	}
 }
 
 func (r *Request) MarshalJSON() ([]byte, error) {
