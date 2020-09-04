@@ -1,6 +1,7 @@
 package traefik_plugin_bridge
 
 import (
+	"bytes"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -23,11 +24,11 @@ func newClientHTTP(address string, timeout time.Duration) (*ClientHTTP, error) {
 }
 
 func (c *ClientHTTP) Call(req *Request) (*Response, error) {
-	r, err := req.JSONReader()
+	buf, err := req.MarshalJSON()
 	if err != nil {
 		return nil, err
 	}
-	httpReq, err := http.NewRequest(http.MethodPost, c.address, r)
+	httpReq, err := http.NewRequest(http.MethodPost, c.address, bytes.NewReader(buf))
 	if err != nil {
 		return nil, err
 	}

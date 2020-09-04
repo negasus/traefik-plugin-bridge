@@ -1,9 +1,7 @@
 package traefik_plugin_bridge
 
 import (
-	"bytes"
 	"encoding/json"
-	"io"
 	"net/http"
 	"sync"
 )
@@ -64,13 +62,4 @@ func (r *Request) MarshalJSON() ([]byte, error) {
 
 func (r *Request) UnmarshalJSON(buf []byte) error {
 	return json.Unmarshal(buf, r)
-}
-
-func (r *Request) JSONReader() (io.Reader, error) {
-	buf, err := r.MarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-
-	return bytes.NewReader(buf), nil
 }
