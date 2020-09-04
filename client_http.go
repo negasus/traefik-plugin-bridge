@@ -24,7 +24,7 @@ func newClientHTTP(address string, timeout time.Duration) (*ClientHTTP, error) {
 }
 
 func (c *ClientHTTP) Call(req *Request) (*Response, error) {
-	buf, err := req.MarshalJSON()
+	buf, err := req.marshalJSON()
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (c *ClientHTTP) Call(req *Request) (*Response, error) {
 	}
 
 	resp := acquireResponse()
-	err = resp.UnmarshalJSON(body)
+	err = resp.unmarshalJSON(body)
 	if err != nil {
 		releaseResponse(resp)
 		return nil, err
