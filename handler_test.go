@@ -42,7 +42,7 @@ func TestHandler(t *testing.T) {
 		DeleteRequestHeaders: []string{"HEADER1"},
 		InterruptRequest:     nil,
 	}
-	responseFromServiceBytes, _ := responseFromService.marshalJSON()
+	responseFromServiceBytes, _ := responseFromService.ToJSON()
 
 	serviceServer := &testserver{
 		responseCode: 200,
@@ -93,7 +93,7 @@ func TestHandler_Interrupt(t *testing.T) {
 			Body:         "forbidden",
 		},
 	}
-	responseFromServiceBytes, _ := responseFromService.marshalJSON()
+	responseFromServiceBytes, _ := responseFromService.ToJSON()
 
 	serviceServer := &testserver{
 		responseCode: 200,

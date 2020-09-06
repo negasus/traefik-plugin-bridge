@@ -56,10 +56,10 @@ func (r *Request) FillFromHTTPRequest(httpReq *http.Request, requestConfig *Conf
 	}
 }
 
-func (r *Request) marshalJSON() ([]byte, error) {
+func (r *Request) ToJSON() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func (r *Request) unmarshalJSON(buf []byte) error {
+func (r *Request) FromJSON(buf []byte) error {
 	return json.Unmarshal(buf, r)
 }

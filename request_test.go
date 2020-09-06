@@ -79,7 +79,7 @@ func TestRequest_marshalJSON(t *testing.T) {
 		RequestURI: "c",
 	}
 
-	buf, err := req.marshalJSON()
+	buf, err := req.ToJSON()
 	if err != nil {
 		t.Fatalf("unexpected error")
 	}
@@ -92,7 +92,7 @@ func TestRequest_marshalJSON(t *testing.T) {
 func TestRequest_unmarshalJSON(t *testing.T) {
 	req := &Request{}
 
-	err := req.unmarshalJSON([]byte(`{"1":{"foo":["bar"]},"2":"a","3":"b","4":"c"}`))
+	err := req.FromJSON([]byte(`{"1":{"foo":["bar"]},"2":"a","3":"b","4":"c"}`))
 	if err != nil {
 		t.Fatalf("unexpected error")
 	}

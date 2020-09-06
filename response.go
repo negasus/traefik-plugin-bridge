@@ -45,10 +45,10 @@ func (r *Response) reset() {
 	r.InterruptRequest = nil
 }
 
-func (r *Response) marshalJSON() ([]byte, error) {
+func (r *Response) ToJSON() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-func (r *Response) unmarshalJSON(buf []byte) error {
+func (r *Response) FromJSON(buf []byte) error {
 	return json.Unmarshal(buf, r)
 }

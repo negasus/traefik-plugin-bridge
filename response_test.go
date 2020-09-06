@@ -52,7 +52,7 @@ func TestResponse_marshalJSON(t *testing.T) {
 		},
 	}
 
-	buf, err := resp.marshalJSON()
+	buf, err := resp.ToJSON()
 	if err != nil {
 		t.Fatalf("unexpected error %v", err)
 	}
@@ -65,7 +65,7 @@ func TestResponse_marshalJSON(t *testing.T) {
 func TestResponse_unmarshalJSON(t *testing.T) {
 	resp := &Response{}
 
-	err := resp.unmarshalJSON([]byte(`{"1":{"a":"b"},"2":{"c":"d"},"3":["e","f"],"4":{"1":200,"2":"g"}}`))
+	err := resp.FromJSON([]byte(`{"1":{"a":"b"},"2":{"c":"d"},"3":["e","f"],"4":{"1":200,"2":"g"}}`))
 	if err != nil {
 		t.Fatalf("unexpected error %v", err)
 	}
