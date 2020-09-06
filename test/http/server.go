@@ -1,6 +1,7 @@
 package main
 
 import (
+	traefik_plugin_bridge "github.com/negasus/traefik-plugin-bridge"
 	"io/ioutil"
 	"log"
 	"net"
@@ -15,11 +16,14 @@ func (s *server) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	body, _ := ioutil.ReadAll(req.Body)
 	log.Printf("request body: %s", body)
 
-	// remove User-Agent header
-	// add custom User-Agent header to the request
-	r := []byte(`{"3":["user-agent"],"1":{"user-agent":"Middleware!"}}`)
+	resp := traefik_plugin_bridge.Response{
+		DeleteRequestHeaders: []string{"user-agent"},
+		AddRequestHeaders:    map[string]string{"user-agent": "Middleware!"},
+	}
 
-	rw.Write(r)
+	respStr, _ := resp.ToJSON()
+
+	rw.Write(respStr)
 }
 
 func main() {
