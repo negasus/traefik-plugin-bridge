@@ -4,9 +4,13 @@
 
 > `BINARY` mode still not implemented
 
-The Bridge plugin allows make requests to your custom services. 
+Write middlewares with you preferred languages!
 
-You can:
+PHP, Python, NodeJS or more - it does not matter!
+ 
+The Bridge plugin allows make requests to your services.
+
+## You can
 
 - get the request data
     - headers
