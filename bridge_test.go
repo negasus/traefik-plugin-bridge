@@ -36,11 +36,13 @@ func TestBridgeLog(t *testing.T) {
 	out := &bytes.Buffer{}
 	log.SetOutput(out)
 
-	b := &Bridge{}
+	b := &Bridge{
+		name: "BAZ",
+	}
 
 	b.log("foo %s", "bar")
 
-	if !strings.HasSuffix(out.String(), "[BRIDGE MIDDLEWARE] foo bar\n") {
+	if !strings.HasSuffix(out.String(), "[BRIDGE MIDDLEWARE: BAZ] foo bar\n") {
 		t.Fatalf("wrong text")
 	}
 }
