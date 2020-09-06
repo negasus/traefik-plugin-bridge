@@ -57,6 +57,6 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 	return b, nil
 }
 
-func (bridge *Bridge) log(format string, v ...interface{}) {
-	log.Printf("[BRIDGE MIDDLEWARE: %s] %s", bridge.name, fmt.Sprintf(format, v...))
+func (bridge *Bridge) log(message string, err error) {
+	log.Printf("[BRIDGE MIDDLEWARE: %s] %s, %v", bridge.name, message, err)
 }

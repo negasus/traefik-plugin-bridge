@@ -3,6 +3,7 @@ package traefik_plugin_bridge
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"log"
 	"strings"
 	"testing"
@@ -40,9 +41,9 @@ func TestBridgeLog(t *testing.T) {
 		name: "BAZ",
 	}
 
-	b.log("foo %s", "bar")
+	b.log("foo", fmt.Errorf("bar"))
 
-	if !strings.HasSuffix(out.String(), "[BRIDGE MIDDLEWARE: BAZ] foo bar\n") {
+	if !strings.HasSuffix(out.String(), "[BRIDGE MIDDLEWARE: BAZ] foo, bar\n") {
 		t.Fatalf("wrong text")
 	}
 }
