@@ -20,6 +20,54 @@ You can:
     - add response headers
     - interrupt the request with custom body and status code 
 
+## Usage example
+
+1. Run `logserver` ([github](https://github.com/negasus/logserver)) as backend for logging requests (or any you prefer software)
+
+```
+docker run --rm -p 2000:2000 negasus/logserver
+```
+
+2. Run our service for listen the middleware and modify the request
+
+```
+go run ./test/http
+```
+
+3. Run the Traefik with a plugin configuration:
+
+```
+address: 'http://127.0.0.1:3000'
+```
+
+4. Send request to the Traefik
+
+```
+# in my case the Traefik is listen 8000 port
+
+curl http://localhost:8000 
+```
+
+5. Check `logserver` output
+
+```
+----------[ 1 ]----------
+2020-09-06 17:33:29.3858593 +0000 UTC m=+172.295935301
+[172.17.0.1:47380] GET /
+
+Host: localhost:8000
+Content-Length: 0
+User-Agent: Middleware!             <----- It's work!
+Accept: */*
+X-Forwarded-For: 127.0.0.1
+X-Forwarded-Host: localhost:8000
+X-Forwarded-Port: 8000
+X-Forwarded-Proto: http
+X-Forwarded-Server: notebook
+X-Real-Ip: 127.0.0.1
+Accept-Encoding: gzip
+```
+
 ## Configuration
 
 ```
@@ -67,4 +115,5 @@ type ResponseInterruptRequest struct {
 - implementation for the `BINARY` mode
 - full documentation 
 - check the response status from the customer service
+- multiple connections to services
 - circuit breaker
