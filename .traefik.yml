@@ -7,4 +7,3 @@ summary: '[bridge] Call your services on every request'
 
 testData:
   address: http://127.0.0.1:3000
-  timeout: 100
