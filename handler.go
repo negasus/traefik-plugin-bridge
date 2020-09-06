@@ -1,6 +1,7 @@
 package traefik_plugin_bridge
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -42,7 +43,7 @@ func (bridge *Bridge) ServeHTTP(rw http.ResponseWriter, httpReq *http.Request) {
 				bridge.log("error write body, %s", err)
 			}
 			if n != len(resp.InterruptRequest.Body) {
-				bridge.log("write unexpected body length %d, expect %d", n, len(resp.InterruptRequest.Body))
+				bridge.log("write unexpected body length", fmt.Errorf("write %d, expect %d", n, len(resp.InterruptRequest.Body)))
 			}
 		}
 		return
