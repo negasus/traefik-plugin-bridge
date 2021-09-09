@@ -2,38 +2,34 @@ package traefik_plugin_bridge
 
 import (
 	"fmt"
+	"log"
 )
 
 const (
 	defaultProtocol     = ProtocolHTTP
 	defaultAddress      = "http://127.0.0.1:8000"
-	defaultTimeout      = 500
+	defaultTimeout      = 1000
 	defaultFailStrategy = FailStrategyPass
 )
 
 const (
-	FailStrategyPass      FailStrategy = "PASS"
-	FailStrategyInterrupt FailStrategy = "INTERRUPT"
-	ProtocolHTTP          Protocol     = "HTTP"
-	ProtocolBinary        Protocol     = "BINARY"
+	FailStrategyPass      string = "PASS"
+	FailStrategyInterrupt string = "INTERRUPT"
+	ProtocolHTTP          string = "HTTP"
+	ProtocolBinary        string = "BINARY"
 )
 
-// FailStrategy describe strategy on fail request to the backend
-type FailStrategy string
-
-// Validate FailStrategy value
-func (f FailStrategy) Validate() error {
+// ValidateFailStrategy FailStrategy value
+func ValidateFailStrategy(f string) error {
 	if f != FailStrategyInterrupt && f != FailStrategyPass {
-		return fmt.Errorf("wrong FailStrategy, expected values: %s, %s", FailStrategyPass, FailStrategyInterrupt)
+		return fmt.Errorf("wrong FailStrategy, expected values: %s, %s. got = %s", FailStrategyPass, FailStrategyInterrupt, f)
 	}
 	return nil
 }
 
-// Protocol describe interaction protocol
-type Protocol string
-
-// Validate Protocol value
-func (p Protocol) Validate() error {
+// ValidateProtocol Protocol value
+func ValidateProtocol(p string) error {
+	log.Printf("%T (%v)", ProtocolBinary, ProtocolBinary)
 	if p != ProtocolHTTP && p != ProtocolBinary {
 		return fmt.Errorf("wrong Protocol, expected values: %s, %s", ProtocolHTTP, ProtocolBinary)
 	}
@@ -42,11 +38,11 @@ func (p Protocol) Validate() error {
 
 // Config the plugin configuration.
 type Config struct {
-	Protocol     Protocol      `json:"protocol,omitempty"`
+	Protocol     string        `json:"protocol,omitempty"`
 	Address      string        `json:"address,omitempty"`
 	Timeout      int           `json:"timeout,omitempty"`
 	Request      ConfigRequest `json:"request,omitempty"`
-	FailStrategy FailStrategy  `json:"fail_strategy,omitempty"`
+	FailStrategy string        `json:"failstrategy,omitempty"`
 }
 
 // ConfigRequest describe fields for pass to the middleware backend
@@ -59,13 +55,15 @@ type ConfigRequest struct {
 
 // Validate config
 func (c *Config) Validate() error {
+	log.Printf("config: %+v", c)
+
 	if c.Address == "" {
 		return fmt.Errorf("address must be not empty")
 	}
-	if err := c.Protocol.Validate(); err != nil {
+	if err := ValidateProtocol(c.Protocol); err != nil {
 		return err
 	}
-	if err := c.FailStrategy.Validate(); err != nil {
+	if err := ValidateFailStrategy(c.FailStrategy); err != nil {
 		return err
 	}
 	return nil

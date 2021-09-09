@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-type bridgeMode int
-
 const (
 	bridgeModeHTTP   = 1
 	bridgeModeBINARY = 2
@@ -17,7 +15,7 @@ const (
 
 // Bridge plugin.
 type Bridge struct {
-	mode          bridgeMode
+	mode          int
 	clientHTTP    *ClientHTTP
 	clientBINARY  *ClientBINARY
 	next          http.Handler
@@ -40,7 +38,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 	var err error
 
 	switch config.Protocol {
-	case ProtocolBinary:
+	case "BINARY":
 		b.mode = bridgeModeBINARY
 		b.clientBINARY, err = newClientBinary(config.Address, time.Millisecond*time.Duration(config.Timeout))
 		if err != nil {
